@@ -74,11 +74,16 @@ app.post('/api/persons', (request, response) => {
         response.status(400).json({ error: "Name or Number missing" })
 })
 
-
+app.put('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const person = persons.find(persons => persons.id === id)
+    person.number = request.body.number
+    response.status(200).end()
+})
 
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
-    persons = persons.filter(persons => persons.id === id)
+    persons = persons.filter(persons => persons.id !== id)
 
     response.status(204).end()
 })
